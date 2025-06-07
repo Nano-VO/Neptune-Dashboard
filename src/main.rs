@@ -19,7 +19,7 @@ async fn main() -> anyhow::Result<()> {
             break;
         }
 
-        println!("🔍 Scanning: {}", wallet);
+        println!("🔍 Scanning pubkey: {}", wallet);
 
         // Conversion en Pubkey
         let address = match wallet.parse::<Pubkey>() {
