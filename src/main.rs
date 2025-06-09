@@ -12,7 +12,6 @@ async fn menu() {
     loop {
         println!("📊 Welcome to Neptune Dashboard for Solana");
         println!("1. Check wallet balance");
-        println!("2. Scan token");
         println!("Type 'exit' to quit");
 
         let mut user_choice = String::new();
@@ -81,33 +80,3 @@ async fn adress_balance() -> anyhow::Result<()> {
 }
 
 
-async fn token_balance() -> Result<()> {
-    loop{
-        let mut ca = String::new();
-
-        println!("🔍 Input token to scan (or type 'end' to return to menu):");
-        io::stdin()
-            .read_line(&mut ca)
-            .expect("Unable to read stdin");
-
-        let ca = ca.trim();
-
-        if ca == "end" {
-            println!("↩️ Returning to main menu...");
-            break; // On quitte la boucle -> retour au menu
-        }
-
-        println!("📡 Scanning contract adress: {}", ca);
-    let client = RpcClient::new_with_commitment(
-        String::from("https://api.devnet.solana.com"),
-        CommitmentConfig::confirmed(),
-    );
-}
-
-    /*let mint = pubkey!(&ca);
-
-    let token_supply = client.get_token_supply(&mint).await?;
-
-    println!("{:#?}", token_supply);
-    }
-    Ok(())*/
