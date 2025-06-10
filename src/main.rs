@@ -1,18 +1,30 @@
+use core::num;
 use std::io;
 use solana_client::nonblocking::rpc_client::RpcClient;
-use solana_sdk::{commitment_config::CommitmentConfig, native_token::LAMPORTS_PER_SOL, pubkey::Pubkey};
+use solana_sdk::{commitment_config::CommitmentConfig, native_token::LAMPORTS_PER_SOL,pubkey,  pubkey::Pubkey,signature::Keypair, signer::Signer};
+
+use anyhow::Result;
+
 
 #[tokio::main]
 async fn main() {
     menu().await;
+    struct wallet{
+        pubkey: String,
+        number: u8,
+        privkey: String,
+
+    
+    };
 }
 
 
 async fn menu() {
     loop {
-        print!("\x1B[2J\x1B[H");
         println!("📊 Welcome to Neptune Dashboard for Solana");
         println!("1. Check wallet balance");
+        println!("2. Create wallet");
+        println!("3. See wallet list");
         println!("Type 'exit' to quit");
 
         let mut user_choice = String::new();
@@ -25,11 +37,20 @@ async fn menu() {
         if user_choice == "1" {
             // balance() se termine quand l'utilisateur tape "end"
             adress_balance().await.unwrap();
-        } else if user_choice.eq_ignore_ascii_case("exit") {
+
+        } else if user_choice == "2" {
+        create_wallet();
+
+        } else if user_choice == "3" {
+        println!("Printing wallet list...");
+        
+
+        }else if user_choice.eq_ignore_ascii_case("exit") {
             println!("👋 Goodbye !");
             break;
         } else {
             println!("❌ Invalid input. Please try again.");
+            print!("\x1B[2J\x1B[H");
         }
 
         println!(); // Un peu d'espace entre les cycles
@@ -49,6 +70,8 @@ async fn adress_balance() -> anyhow::Result<()> {
 
         if wallet == "end" {
             println!("↩️ Returning to main menu...");
+            print!("\x1B[2J\x1B[H");
+
             break; // On quitte la boucle -> retour au menu
         }
 
@@ -81,3 +104,35 @@ async fn adress_balance() -> anyhow::Result<()> {
 }
 
 
+fn create_wallet(){
+    println!("Enter number of wallets to create 'end' to quit :");
+
+    let mut wallet_to_create = String::new();
+    io::stdin()
+        .read_line(&mut wallet_to_create)
+        .expect("Failed to read line");
+
+    if wallet_to_create.trim() == "end" {
+    println!("↩️ Returning to main menu...");
+    print!("\x1B[2J\x1B[H");}
+
+    else{
+
+    let number: i32 = wallet_to_create
+        .trim()
+        .parse()
+        .expect("Please enter a valid integer");
+
+
+    println!("Creating {} wallets",number); 
+    for i in 1..number+1{
+    
+    
+    
+    let keypair = Keypair::new();
+    let address = keypair.pubkey();
+
+    println!(" Wallet {} : {address}",i)
+    }
+}
+}
