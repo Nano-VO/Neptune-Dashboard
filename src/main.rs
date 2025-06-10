@@ -10,6 +10,7 @@ async fn main() {
 
 async fn menu() {
     loop {
+        print!("\x1B[2J\x1B[H");
         println!("📊 Welcome to Neptune Dashboard for Solana");
         println!("1. Check wallet balance");
         println!("Type 'exit' to quit");
